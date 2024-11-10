@@ -1,3 +1,7 @@
+## 2024-11-10
+
+- Update game.conf title and remove some devtest mods
+
 ## 2024-11-09
 
 - Set up the game!
