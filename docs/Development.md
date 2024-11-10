@@ -21,7 +21,7 @@ tutorial_debug_edit_item_spawners = true
 
 This enables the `/treset` and `/tsave` commands to help editing the schematic. It also forces the Tutorial to only generate the raw castle, not the grasslands. Also, the item spawners become visible.
 
-1. Start Luanti and create a new world and enter the world in singleplayer (there should be a confirmation message in chat)
+1. Start Luanti, choose this game, enable creative mode, disable damage, create a new world, enter the world in singleplayer (there should be a confirmation message in chat)
 1. Grant yourself permissions to your liking using chat, one line at a time:
 
 ```
