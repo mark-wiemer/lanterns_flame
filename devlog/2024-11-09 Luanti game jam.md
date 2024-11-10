@@ -2,4 +2,6 @@
 
 - Set up the game!
 
-![First render of game with custom header image](firstBanner.png)
+  ![First render of game with custom header image](firstBanner.png)
+
+- Modified Wuzzy's tutorial world following his development.md guide, will be adapting it for my world: a small village in a valley whose gate is closed off
