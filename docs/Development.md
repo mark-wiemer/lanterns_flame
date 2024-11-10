@@ -11,41 +11,38 @@ The tutorial castle is saved in the game itself in schematics and other binary m
 ### Summary
 
 1. If Luanti is running, shut it down
-2. Trust the code. In the settings menu or `minetest.conf`, add `tutorial_mapgen` to `secure.trusted_mods`
-3. In `minetest.conf`, add `tutorial_debug_map_editing = true`
-4. In `minetest.conf`, add `tutorial_debug_edit_item_spawners = true`
-5. Start Luanti and create a new world and enter the world in singleplayer (there should be a confirmation message in chat)
-6. Edit the map to your likings
-7. Grant yourselves the `tutorialmap` privilege (`/grant singleplayer tutorialmap`)
-8. Use `/tsave` command to save the map
+1. Trust the code. In `minetest.conf`, ensure you have at least these settings:
 
-Note: `tutorial_debug_map_editing=true` will automatically enable Creative Mode.
-
-The changes will end up in `<world directory>/mapdata`. Copy this directory to `<game directory>/mods/tutorial_mapgen`, overwriting files, if neccessary.
-
-If you want to edit item spawn positions, see the details below.
-
-### Mod security
-
-First, you need to list `tutorial_mapgen` as a trusted mod because the `/tsave` command needs write access.
-You can review the relevant code in `mods/tutorial_mapgen/init.lua`.
-
-Use the setting `secure.trusted_mods` to edit the list of trusted mods.
-
-### Editing the map
-
-You want to only edit the map data files. Here's how:
-
-In `minetest.conf`, add the following settings:
-
-```
+```conf
+secure.trusted_mods = tutorial_mapgen
 tutorial_debug_map_editing = true
 tutorial_debug_edit_item_spawners = true
 ```
 
 This enables the `/treset` and `/tsave` commands to help editing the schematic. It also forces the Tutorial to only generate the raw castle, not the grasslands. Also, the item spawners become visible.
 
-Create a new world with setting `tutorial_debug_map_editing` set to `true`. Now edit the map to your likings using your instant digging power and the creative inventory. You can of course WorldEdit to speed up the process.
+1. Start Luanti and create a new world and enter the world in singleplayer (there should be a confirmation message in chat)
+1. Grant yourself permissions to your liking:
+
+```
+/grant singleplayer tutorialmap # reset and save map updates
+/fly me
+/grant singleplayer fast
+/noclip me
+```
+
+1. Edit the map to your liking
+1. Use `/tsave` command to save the map
+
+The changes will end up in `<world directory>/mapdata`. Copy this directory to `<game directory>/mods/tutorial_mapgen`, overwriting files, if necessary.
+
+If you want to edit item spawn positions, see the details below.
+
+### Editing the map
+
+You want to only edit the map data files. Here's how:
+
+Create a new world. Now edit the map to your likings using your instant digging power and the creative inventory. You can of course WorldEdit to speed up the process.
 If you're finished, grant yourself the `tutorialmap` privilege and use the `/tsave` command. This updates the map files in `<world directory>/mapdata`. Note that there are limits as for how big the tutorial castle can be.
 
 Copy the contents of this directory to the `tutorial_mapgen` mod under `mapdata` and overwrite files as neccessary. Test your changes by creating a new world. If everything went fine, you can commit your changes now.
