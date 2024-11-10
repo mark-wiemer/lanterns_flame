@@ -1,10 +1,14 @@
 # Lantern's Flame license
 
-Custom code is under [MIT license](https://opensource.org/license/MIT), copyright Mark Wiemer 2024. Base game, devtest, is under [various free/libre open-source licenses](https://github.com/mark-wiemer/minetest/blob/8322017f4d09a666ff195535a60de3400c24d5a1/LICENSE.txt)
+Custom code is under [MIT license](https://opensource.org/license/MIT), copyright Mark Wiemer 2024. The original devtest is licensed under [various free/libre open-source licenses](https://github.com/mark-wiemer/minetest/blob/8322017f4d09a666ff195535a60de3400c24d5a1/LICENSE.txt)
 
 Custom code includes only:
 
 - mods/hello_luanti
+
+## Assets
+
+The header is written in [Super Pixel Font](https://www.fontspace.com/super-pixel-font-f112028) and licensed under a non-commercial personal use license.
 
 ## MIT license
 
