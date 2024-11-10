@@ -2,7 +2,7 @@ Here is some useful info for developers.
 
 ### How the map is saved
 
-The map is not stored in a traditional way, like in real Minetest world. Instead, the tutorial generates the world on-the-fly when the player creates a new world.
+The map is not stored in a traditional way, like in real Luanti world. Instead, the tutorial generates the world on-the-fly when the player creates a new world.
 
 The tutorial castle is saved in the game itself in schematics and other binary metadata files in `mods/tutorial_mapgen/mapdata`. When you start a new world, Tutorial force-sets the mapgen to `singlenode`, loads the schematics and places them. After that, it generates the grassland surroundings.
 
@@ -10,11 +10,11 @@ The tutorial castle is saved in the game itself in schematics and other binary m
 
 ### Summary
 
-1. If Minetest is running, shut it down
+1. If Luanti is running, shut it down
 2. Trust the code. In the settings menu or `minetest.conf`, add `tutorial_mapgen` to `secure.trusted_mods`
 3. In `minetest.conf`, add `tutorial_debug_map_editing = true`
 4. In `minetest.conf`, add `tutorial_debug_edit_item_spawners = true`
-5. Start Minetest and create a new world and enter the world in singleplayer (there should be a confirmation message in chat)
+5. Start Luanti and create a new world and enter the world in singleplayer (there should be a confirmation message in chat)
 6. Edit the map to your likings
 7. Grant yourselves the `tutorialmap` privilege (`/grant singleplayer tutorialmap`)
 8. Use `/tsave` command to save the map
