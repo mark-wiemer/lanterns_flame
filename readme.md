@@ -10,4 +10,4 @@ Lantern's Flame: Genesis is a pre-alpha demo made for [Luanti Game Jam 2024](htt
 
 Lantern's Flame was made in [Luanti](https://www.minetest.net/) (formerly known as Minetest)
 
-- Base game is [Luanti's devtest](https://github.com/mark-wiemer/minetest/tree/8322017f4d09a666ff195535a60de3400c24d5a1/games/devtest)
+- Base game is [Wuzzy's Tutorial](https://content.luanti.org/packages/Wuzzy/tutorial/)
