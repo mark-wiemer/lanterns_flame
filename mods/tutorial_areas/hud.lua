@@ -15,7 +15,7 @@ minetest.register_globalstep(function(dtime)
 		local areaStrings = {}
 		for id, area in pairs(areas:getAreasAtPos(pos)) do
 			if not area.hidden then
-				table.insert(areaStrings, (S("You are here: %s")):format(S(area.name)))
+				-- table.insert(areaStrings, (S("You are here: %s")):format(S(area.name)))
 			end
 		end
 		local areaString = table.concat(areaStrings, "\n")
