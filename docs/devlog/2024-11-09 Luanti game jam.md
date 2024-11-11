@@ -6,6 +6,7 @@
   - cannot edit world bounds, some chunks within bounds don't seem to appear
   - 8ae0b16 Mark Wiemer diagnostic world edge pillars mostly working but one corner missing, some holes still present
   - 9bc6045 Mark Wiemer Revert "Update worldgen bounds" entirely working!
+  - 41f45b8 Mark Wiemer Should be fully flat world also works :)
 
 ## 2024-11-09
 
