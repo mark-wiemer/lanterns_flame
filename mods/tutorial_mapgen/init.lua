@@ -44,7 +44,7 @@ tutorial.map_sector = {}
 -- entire Tutorial World, it's best if the start matches the start of a mapchunk
 -- This value is used for saving the world
 tutorial.limits = {
-	{ x = -64, y = -32, z = -32 },
+	{ x = -32, y = -32, z = -32 },
 	{ x = 224, y = 48,  z = 144 },
 }
 
