@@ -5,6 +5,7 @@
   - Wuzzy probably manually added holes with the "air" and "ignore" checks, but I'm not sure how to undo them
   - cannot edit world bounds, some chunks within bounds don't seem to appear
   - 8ae0b16 Mark Wiemer diagnostic world edge pillars mostly working but one corner missing, some holes still present
+  - 9bc6045 Mark Wiemer Revert "Update worldgen bounds" entirely working!
 
 ## 2024-11-09
 
