@@ -37,14 +37,15 @@ end
 -- Sectors of the map to save/load
 -- Each element of the array will contain the coordinate where the sector starts
 -- along with a "l" property indicating its length in each direction.
+-- This value is updated elsewhere in the file
 tutorial.map_sector = {}
 
---* try to disable worldgen entirely for experimentation
 -- Array with the minimum and the maximum positions of the cube that contains the
 -- entire Tutorial World, it's best if the start matches the start of a mapchunk
+-- This value is used for saving the world
 tutorial.limits = {
-	{ x = 0,  y = 0,  z = 0 },
-	{ x = -1, y = -1, z = -1 },
+	{ x = -32, y = -32, z = -32 },
+	{ x = 31,  y = 31,  z = 31 },
 }
 
 -- size of the sectors to form divisions of the map.
