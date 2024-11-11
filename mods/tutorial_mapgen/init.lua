@@ -15,8 +15,8 @@ local c_dirt_with_grass = minetest.get_content_id("tutorial_default:dirt_with_gr
 local c_grass = minetest.get_content_id("tutorial_default:grass_5")
 
 -- Directory where the map data will be stored
-tutorial.map_directory = minetest.get_modpath("tutorial_mapgen").."/mapdata/"
-tutorial.map_save_directory = minetest.get_worldpath().."/mapdata/"
+tutorial.map_directory = minetest.get_modpath("tutorial_mapgen") .. "/mapdata/"
+tutorial.map_save_directory = minetest.get_worldpath() .. "/mapdata/"
 
 local insecure_environment = minetest.request_insecure_environment()
 
@@ -24,7 +24,7 @@ local insecure_environment = minetest.request_insecure_environment()
 
 local function init_item_spawners(spawners)
 	local count = 0
-	for n=1, #spawners do
+	for n = 1, #spawners do
 		local timer = minetest.get_node_timer(spawners[n])
 		timer:start(3)
 		count = count + 1
@@ -39,11 +39,12 @@ end
 -- along with a "l" property indicating its length in each direction.
 tutorial.map_sector = {}
 
+--* try to disable worldgen entirely for experimentation
 -- Array with the minimum and the maximum positions of the cube that contains the
 -- entire Tutorial World, it's best if the start matches the start of a mapchunk
 tutorial.limits = {
-	{ x = 0, y = 0, z = 0 },
-	{ x = 0, y = 0, z = 0 },
+	{ x = 0,  y = 0,  z = 0 },
+	{ x = -1, y = -1, z = -1 },
 }
 
 -- size of the sectors to form divisions of the map.
@@ -55,7 +56,7 @@ tutorial.sector_size = 80
 for x = tutorial.limits[1].x, tutorial.limits[2].x, tutorial.sector_size do
 	for y = tutorial.limits[1].y, tutorial.limits[2].y, tutorial.sector_size do
 		for z = tutorial.limits[1].z, tutorial.limits[2].z, tutorial.sector_size do
-			table.insert(tutorial.map_sector, {x=x,y=y,z=z,l=(tutorial.sector_size - 1)})
+			table.insert(tutorial.map_sector, { x = x, y = y, z = z, l = (tutorial.sector_size - 1) })
 		end
 	end
 end
@@ -63,9 +64,9 @@ end
 
 -- Load the sector schematics from disc
 tutorial.sector_data = {}
-for k,sector in pairs(tutorial.map_sector) do
-	local filename = tutorial.map_directory .. "sector_"..k
-	local f, err = io.open(filename..".meta", "rb")
+for k, sector in pairs(tutorial.map_sector) do
+	local filename = tutorial.map_directory .. "sector_" .. k
+	local f, err = io.open(filename .. ".meta", "rb")
 	if f then
 		local data = minetest.deserialize(minetest.decompress(f:read("*a")))
 		tutorial.sector_data[filename] = data
@@ -82,16 +83,16 @@ end
 -- @param slice_prob_list = {{ypos=,prob=}, ...} list of probabilities for the slices to be loaded (if nil, always load)
 -- @return The number of nodes with metadata.
 local function save_region(minp, maxp, probability_list, filename, slice_prob_list)
-
 	local success = minetest.create_schematic(minp, maxp, probability_list, filename .. ".mts", slice_prob_list)
 	if not success then
-		minetest.log("error", "[tutorial_mapgen] problem creating schematic on ".. minetest.pos_to_string(minp) .. ": " .. filename)
+		minetest.log("error",
+			"[tutorial_mapgen] problem creating schematic on " .. minetest.pos_to_string(minp) .. ": " .. filename)
 		return false
 	end
 
 	local manip = minetest.get_voxel_manip()
 	manip:read_from_map(minp, maxp)
-	local pos = {x=minp.x, y=0, z=0}
+	local pos = { x = minp.x, y = 0, z = 0 }
 	local count = 0
 	local nodes = {}
 	local get_node, get_meta = minetest.get_node, minetest.get_meta
@@ -133,7 +134,6 @@ local function save_region(minp, maxp, probability_list, filename, slice_prob_li
 		pos.x = pos.x + 1
 	end
 	if count > 0 then
-
 		local result = {
 			size = {
 				x = maxp.x - minp.x,
@@ -146,7 +146,7 @@ local function save_region(minp, maxp, probability_list, filename, slice_prob_li
 		-- Serialize entries
 		result = minetest.serialize(result)
 
-		local file, err = insecure_environment.io.open(filename..".meta", "wb")
+		local file, err = insecure_environment.io.open(filename .. ".meta", "wb")
 		if err ~= nil then
 			error("Couldn't write to \"" .. filename .. "\"")
 		end
@@ -155,7 +155,7 @@ local function save_region(minp, maxp, probability_list, filename, slice_prob_li
 		file:close()
 		minetest.log("action", "[tutorial_mapgen] schematic + metadata saved: " .. filename)
 	else
-	   minetest.log("action", "[tutorial_mapgen] schematic (no metadata) saved: " .. filename)
+		minetest.log("action", "[tutorial_mapgen] schematic (no metadata) saved: " .. filename)
 	end
 	return success, count
 end
@@ -171,23 +171,24 @@ end
 -- @param force_placement is a boolean indicating whether nodes other than air and ignore are replaced by the schematic
 -- @return boolean indicating success or failure
 local function load_region(minp, filename, vmanip, rotation, replacements, force_placement)
-
 	if rotation == "random" then
-		rotation = {nil, 90, 180, 270}
-		rotation = rotation[math.random(1,4)]
+		rotation = { nil, 90, 180, 270 }
+		rotation = rotation[math.random(1, 4)]
 	end
 
 	local success
 	if vmanip and minetest.place_schematic_on_vmanip then
-		success = minetest.place_schematic_on_vmanip(vmanip, minp, filename .. ".mts", tostring(rotation), replacements, force_placement)
+		success = minetest.place_schematic_on_vmanip(vmanip, minp, filename .. ".mts", tostring(rotation), replacements,
+			force_placement)
 	else
 		success = minetest.place_schematic(minp, filename .. ".mts", tostring(rotation), replacements, force_placement)
 	end
 
 	if success == false then
-		minetest.log("action", "[tutorial_mapgen] schematic partionally loaded on ".. minetest.pos_to_string(minp))
+		minetest.log("action", "[tutorial_mapgen] schematic partionally loaded on " .. minetest.pos_to_string(minp))
 	elseif not success then
-		minetest.log("error", "[tutorial_mapgen] problem placing schematic on ".. minetest.pos_to_string(minp) .. ": " .. filename)
+		minetest.log("error",
+			"[tutorial_mapgen] problem placing schematic on " .. minetest.pos_to_string(minp) .. ": " .. filename)
 		return nil
 	end
 
@@ -203,17 +204,17 @@ local function load_region(minp, filename, vmanip, rotation, replacements, force
 			if entry.meta then
 				get_meta(entry):from_table(entry.meta)
 				if entry.meta.fields.spawned then
-					table.insert(spawners, {x=entry.x, y=entry.y, z=entry.z})
+					table.insert(spawners, { x = entry.x, y = entry.y, z = entry.z })
 				end
 			end
 		end
 	else
 		local maxp_x, maxp_z = minp.x + data.size.x, minp.z + data.size.z
 		if rotation == 90 then
-		for i, entry in ipairs(data.nodes) do
-			entry.x, entry.y, entry.z = minp.x + entry.z, minp.y + entry.y, maxp_z - entry.x
-			if entry.meta then get_meta(entry):from_table(entry.meta) end
-		end
+			for i, entry in ipairs(data.nodes) do
+				entry.x, entry.y, entry.z = minp.x + entry.z, minp.y + entry.y, maxp_z - entry.x
+				if entry.meta then get_meta(entry):from_table(entry.meta) end
+			end
 		elseif rotation == 180 then
 			for i, entry in ipairs(data.nodes) do
 				entry.x, entry.y, entry.z = maxp_x - entry.x, minp.y + entry.y, maxp_z - entry.z
@@ -225,11 +226,11 @@ local function load_region(minp, filename, vmanip, rotation, replacements, force
 				if entry.meta then get_meta(entry):from_table(entry.meta) end
 			end
 		else
-			minetest.log("error", "[tutorial_mapgen] unsupported rotation angle: " ..  (rotation or "nil"))
+			minetest.log("error", "[tutorial_mapgen] unsupported rotation angle: " .. (rotation or "nil"))
 			return false
 		end
 	end
-	minetest.log("action", "[tutorial_mapgen] schematic + metadata loaded on ".. minetest.pos_to_string(minp))
+	minetest.log("action", "[tutorial_mapgen] schematic + metadata loaded on " .. minetest.pos_to_string(minp))
 	return true, spawners
 end
 
@@ -238,8 +239,8 @@ local function save_schematic()
 	minetest.chat_send_all("Saving map data, please wait ...")
 	local success = true
 	minetest.mkdir(tutorial.map_save_directory)
-	for k,sector in pairs(tutorial.map_sector) do
-		local filename = tutorial.map_save_directory .. "sector_"..k
+	for k, sector in pairs(tutorial.map_sector) do
+		local filename = tutorial.map_save_directory .. "sector_" .. k
 		local minp = sector
 		local maxp = {
 			x = sector.x + sector.l,
@@ -247,22 +248,23 @@ local function save_schematic()
 			z = sector.z + sector.l
 		}
 		if not save_region(minp, maxp, nil, filename) then
-			minetest.log("error", "[tutorial_mapgen] error loading Tutorial World sector " .. minetest.pos_to_string(sector))
+			minetest.log("error",
+				"[tutorial_mapgen] error loading Tutorial World sector " .. minetest.pos_to_string(sector))
 			success = false
 		end
 	end
 	if success then
-		minetest.chat_send_all("Map data saved to: "..tutorial.map_save_directory)
+		minetest.chat_send_all("Map data saved to: " .. tutorial.map_save_directory)
 	end
 	return success
 end
 
 local function load_schematic()
 	local success = true
-	for k,sector in pairs(tutorial.map_sector) do
-		local filename = tutorial.map_directory .. "sector_"..k
+	for k, sector in pairs(tutorial.map_sector) do
+		local filename = tutorial.map_directory .. "sector_" .. k
 		minetest.log("action", "loading sector " .. minetest.pos_to_string(sector))
-		sector.maxp = vector.add(sector, {x=sector.l, y=sector.l, z=sector.l})
+		sector.maxp = vector.add(sector, { x = sector.l, y = sector.l, z = sector.l })
 
 		-- Load the area above the schematic to guarantee we have blue sky above
 		-- and prevent lighting glitches
@@ -270,7 +272,8 @@ local function load_schematic()
 
 		local vmanip = VoxelManip(sector, sector.maxp)
 		if not load_region(sector, filename, vmanip, nil, nil, true) then
-			minetest.log("error", "[tutorial_mapgen] error loading Tutorial World sector " .. minetest.pos_to_string(sector))
+			minetest.log("error",
+				"[tutorial_mapgen] error loading Tutorial World sector " .. minetest.pos_to_string(sector))
 			success = false
 		end
 		vmanip:calc_lighting()
@@ -293,7 +296,7 @@ if map_editing then
 	minetest.register_chatcommand("treset", {
 		params = "",
 		description = "Resets the tutorial map",
-		privs = {tutorialmap=true},
+		privs = { tutorialmap = true },
 		func = function(name, param)
 			if load_schematic() then
 				minetest.chat_send_player(name, "Tutorial World schematic loaded")
@@ -310,7 +313,7 @@ if map_editing then
 		minetest.register_chatcommand("tsave", {
 			params = "",
 			description = "Saves the tutorial map",
-			privs = {tutorialmap=true},
+			privs = { tutorialmap = true },
 			func = function(name, param)
 				if not save_schematic() then
 					minetest.chat_send_player(name, "An error occurred while saving Tutorial World schematic")
@@ -320,7 +323,8 @@ if map_editing then
 	else
 		minetest.log("warning", "Could not create insecure environment! /tsave command is disabled.")
 		minetest.register_on_joinplayer(function(player)
-			minetest.chat_send_player(player:get_player_name(), "Could not create insecure environment! /tsave command is not available.")
+			minetest.chat_send_player(player:get_player_name(),
+				"Could not create insecure environment! /tsave command is not available.")
 		end)
 	end
 end
@@ -335,9 +339,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local state_changed = false
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 
-	for k,sector in pairs(tutorial.map_sector) do
+	for k, sector in pairs(tutorial.map_sector) do
 		if not tutorial.state.loaded[k] then
-
 			if sector.maxp == nil then
 				sector.maxp = {
 					x = sector.x + sector.l,
@@ -348,10 +351,9 @@ minetest.register_on_generated(function(minp, maxp, seed)
 
 			-- Only load it if not out of the generating range
 			if not ((maxp.x < sector.x) or (minp.x > sector.maxp.x)
-				or (maxp.y < sector.y) or (minp.y > sector.maxp.y)
-				or (maxp.z < sector.z) or (minp.z > sector.maxp.z))
+					or (maxp.y < sector.y) or (minp.y > sector.maxp.y)
+					or (maxp.z < sector.z) or (minp.z > sector.maxp.z))
 			then
-
 				local filename = tutorial.map_directory .. "sector_" .. k
 				local loaded, spawners = load_region(sector, filename, vm)
 				if loaded then
@@ -369,21 +371,21 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		local grasslev = 0
 		if minp.y <= grasslev then
 			local vdata = vm:get_data(vbuffer)
-			local area = VoxelArea:new({MinEdge=emin, MaxEdge=emax})
+			local area = VoxelArea:new({ MinEdge = emin, MaxEdge = emax })
 			for x = minp.x, maxp.x do
 				for z = minp.z, maxp.z do
 					for y = minp.y, maxp.y do
 						local p_pos = area:index(x, y, z)
 						local p_pos_above
-						if minp.y <= grasslev+1 and maxp.y >= maxp.y then
+						if minp.y <= grasslev + 1 and maxp.y >= maxp.y then
 							p_pos_above = area:index(x, y + 1, z)
 						end
-						local _, areas_count = areas:getAreasAtPos({x=x,y=y,z=z})
+						local _, areas_count = areas:getAreasAtPos({ x = x, y = y, z = z })
 						if areas_count == 0 and vdata[p_pos] == minetest.CONTENT_AIR then
 							if y == grasslev then
 								vdata[p_pos] = c_dirt_with_grass
 								if p_pos_above and vdata[p_pos_above] == minetest.CONTENT_AIR then
-									if math.random(0,50) == 0 then
+									if math.random(0, 50) == 0 then
 										vdata[p_pos_above] = c_grass
 									end
 								end
@@ -399,7 +401,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		end
 	end
 
-	if(state_changed) then
+	if (state_changed) then
 		vm:calc_lighting(nil, nil, false)
 		vm:write_to_map()
 		tutorial.save_state()
@@ -408,7 +410,7 @@ end)
 
 minetest.set_mapgen_setting("mg_name", "singlenode")
 minetest.set_mapgen_setting("water_level", "-31000")
-minetest.set_mapgen_setting("chunksize", tostring(tutorial.sector_size/16))
+minetest.set_mapgen_setting("chunksize", tostring(tutorial.sector_size / 16))
 
 -- coordinates for the first time the player spawns
-tutorial.first_spawn = { pos={x=42,y=0.5,z=28}, yaw=(math.pi * 0.5) }
+tutorial.first_spawn = { pos = { x = 42, y = 0.5, z = 28 }, yaw = (math.pi * 0.5) }
