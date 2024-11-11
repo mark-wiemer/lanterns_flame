@@ -42,8 +42,8 @@ tutorial.map_sector = {}
 -- Array with the minimum and the maximum positions of the cube that contains the
 -- entire Tutorial World, it's best if the start matches the start of a mapchunk
 tutorial.limits = {
-	{ x = -32, y = -32, z = -32 },
-	{ x = 224, y = 48, z = 144 },
+	{ x = 0, y = 0, z = 0 },
+	{ x = 0, y = 0, z = 0 },
 }
 
 -- size of the sectors to form divisions of the map.
