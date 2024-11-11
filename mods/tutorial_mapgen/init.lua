@@ -415,4 +415,5 @@ minetest.set_mapgen_setting("chunksize", tostring(tutorial.sector_size / 16))
 
 -- coordinates for the first time the player spawns
 -- player spawn point
+-- yew = pi * 0.5 means 90 deg, facing west
 tutorial.first_spawn = { pos = { x = 42, y = 0.5, z = 28 }, yaw = (math.pi * 0.5) }
