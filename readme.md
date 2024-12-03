@@ -1,6 +1,6 @@
 # Lantern's Flame
 
-Forge your own path through a world full of rich quests and mysterious lands. Live as a freelancing recluse, only visiting town to collect bounties. Join a village and help it grow into an empire. Wander the lands in search of ancient relics and answers to age-old questions. Every step of the way, you're in charge of what you do next.
+Forge your own path through a world full of rich quests and mysterious lands. Live as a freelancing recluse, only visiting town to collect bounties. Join a village and help it grow into an empire. Wander the lands in search of ancient relics and answers to age-old mysteries. Every step of the way, you're in charge of what you do next.
 
 ## Genesis
 
