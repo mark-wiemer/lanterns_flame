@@ -8,4 +8,4 @@ Hi, Mark here. Lantern's Flame: Genesis is an extremely early pre-alpha demo sta
 
 ## Notes
 
-Lantern's Flame is made in [Luanti](https://www.minetest.net/) (formerly known as Minetest). The base game is [Wuzzy's Tutorial](https://content.luanti.org/packages/Wuzzy/tutorial/), used with permission.
+Lantern's Flame is made in [Luanti](https://www.luanti.org/) (formerly known as Minetest). The base game is [Wuzzy's Tutorial](https://content.luanti.org/packages/Wuzzy/tutorial/).
