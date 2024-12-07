@@ -8,7 +8,8 @@ Custom code includes only:
 
 ## Assets
 
-The header is written in [Super Pixel Font](https://www.fontspace.com/super-pixel-font-f112028) and licensed under a non-commercial personal use license.
+- The header is written in [Super Pixel Font](https://www.fontspace.com/super-pixel-font-f112028) and licensed under a non-commercial personal use license.
+- The menu icon is from https://unsplash.com/photos/yellow-pillar-candle-in-black-lantern-S7mAngnWV1A, available for free.
 
 ## MIT license
 
