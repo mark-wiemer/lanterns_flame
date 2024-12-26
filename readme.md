@@ -8,7 +8,7 @@ Hi, Mark here. Lantern's Flame: Genesis is an extremely early pre-alpha demo sta
 
 ## Installation
 
-As of this writing, Lantern's Flame isn't published to ContentDB. However, I plan to publish it by the end of December 2024! 🤞 For now:
+As of this writing, Lantern's Flame isn't worth publishing or playing. It will be on [Luanti's ContentDB](https://content.luanti.org/) when it's ready for players to try. For now:
 
 1. Install Luanti
 1. Open your `path/to/luanti/games` folder
